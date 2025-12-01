@@ -1,0 +1,62 @@
+<script>
+
+    function logoutClicked()
+    {
+        window.location.href = "/userLogout";
+    }
+
+    function changepassword()
+    {
+        window.location.href = "/userchangepassword";
+    }
+</script>
+
+<div id="page">
+
+    <header class="header menu_fixed">
+        <div id="preloader"><div data-loader="circle-side"></div></div>
+        <div id="logo">
+            <a href="#">
+                <img src="img/logo-without-background.png" style="margin-top: 6px;" width="150" height="36" alt="" class="logo_normal">
+                <img src="img/logo.png" width="150" height="36" alt="" class="logo_sticky">
+            </a>
+        </div>
+<!--        <ul id="top_menu">
+            <li><a href="#" class="cart-menu-btn" title="Cart"></a></li>
+            <li><a href="#" id="sign-in" class="login" title="Sign In"></a></li>
+            <li><a href="#" class="wishlist_bt_top" title="Your wishlist"></a></li>
+        </ul>-->
+<!--        <a href="#menu" class="btn_mobile">
+            <div class="hamburger hamburger--spin" id="hamburger">
+                <div class="hamburger-box">
+                    <div class="hamburger-inner"></div>
+                </div>
+            </div>
+        </a>-->
+        <nav id="menu" class="main-menu">
+            <ul>
+                <li><span><a href="#0">OWNER</a></span>
+                    <ul>
+                        <li><a href="/ologin">Login</a></li>
+                        <li><a href="/owner">Signup</a></li>
+
+                    </ul>
+                </li>
+                <li>
+                    <span><a href="#0">ADMIN</a></span>
+                    <ul>
+                        <li><a href="/adminLogin">Login</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <input onclick="logoutClicked()" type="button" id="Logoutb" value="Logout" />
+        <input onclick="changepassword()" type="button" id="changePb" value="Change Password" />
+                </li>
+
+
+            </ul>
+        </nav>
+    </header>
+
+</div>

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+        <meta name="author" content="Ansonika">
+        <title>Panagea | Premium site template for travel agencies, hotels and restaurant listing.</title>
+
+        <!-- Favicons-->
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+        <!-- GOOGLE WEB FONT -->
+        <link rel="preconnect" href="https://fonts.gstatic.com/">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+        <!-- BASE CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/vendors.css" rel="stylesheet">
+
+        <!-- REVOLUTION SLIDER CSS -->
+        <link rel="stylesheet" type="text/css" href="revolution-slider/fonts/font-awesome/css/font-awesome.css">
+        <link rel="stylesheet" type="text/css" href="revolution-slider/css/settings.css">
+        <link rel="stylesheet" type="text/css" href="revolution-slider/css/layers.css">
+        <link rel="stylesheet" type="text/css" href="revolution-slider/css/navigation.css">
+
+        <!-- ALTERNATIVE COLORS CSS -->
+        <link href="#" id="colors" rel="stylesheet">
+        <style>
+            fadeInUpBig {
+                animation: fadeInUpBig 1.5s ease-out;
+                animation-delay: 0.5s; /* Waits for 0.5 seconds before starting */
+            }
+
+        </style>
+        <script>
+            function cities() {
+                var url = "/Cities";
+
+
+                fetch(url, {method: "GET"})
+                        .then(response => response.json())  // Parse the response as JSON
+                        .then(data => render(data));       // Pass the data to the render function
+            }
+
+            // Function to render the city data
+            function render(data) {
+
+                console.log(data);
+
+                // Access the array of cities (assuming it's in data.ans)
+                const arr = data.ans;
+
+                console.log(arr)
+
+                // String to hold the generated HTML
+                let s = "";
+                s += '<div class="row" >';
+                // Loop through each city and create HTML structure
+                for (let i = 0; i < arr.length; i++) {
+                    const city = arr[i];
+
+                    console.log(city)
+
+                    s += `
+                                            <div class="col-xl-3 col-lg-6 col-md-6" style="height: 350px; margin-bottom: 50px">
+                                            <a href="property?city=${encodeURIComponent(city.city)}" class="grid_item" style="height: 350px">
+                                                            <figure>
+								
+                                                                    <img src="${city.photo}" style="height: 350px" class="img-fluid" alt="${city.city}">
+                                                                    <div class="info">
+								
+	
+                                                                            <h3>${city.city}</h3>
+                                                                    </div>
+                                                            </figure>
+                                                    </a>
+                                            </div>`;
+                }
+
+                s += '</div>';
+                // Insert the generated HTML into the container
+                document.getElementById("cities").innerHTML = s;
+            }
+
+
+            function HideLogot() {
+                var userEmail = document.getElementById("uemail").innerText;
+
+                var logoutBtn = document.getElementById("signupb");
+                var changePb = document.getElementById("changePb");
+                var Logoutb = document.getElementById("Logoutb");
+                var userOption = document.getElementById("userOption");
+
+
+                if (!userEmail) {
+
+                    if (logoutBtn) {
+
+                        changePb.style.display = "none";
+                        Logoutb.style.display = "none";
+                    }
+
+                } else {
+                    logoutBtn.style.display = "none"; // Hide the logout button
+                    userOption.style.display = "none"; // Hide the logout button
+                 }
+                        }
+
+            function logoutClicked()
+            {
+                window.location.href = "/userLogout";
+            }
+
+            function changepassword()
+            {
+                window.location.href = "/userchangepassword";
+            }
+
+            function usersignup()
+            {
+                window.location.href = "/usersignup";
+            }
+
+        </script>
+
+<style>
+  #signupb {
+    background-color: #87CEFA; /* Button background color */
+    color: white; /* Text color */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer; /* Change cursor to pointer on hover */
+  }
+
+  #signupb:hover {
+    background-color: #2980b9; /* Darker color on hover */
+  }
+    #Logoutb {
+      background-color: #87CEFA; /* Tomato color for background */
+      color: white; /* White text */
+      border: none; /* No border */
+      padding: 10px 20px; /* Add padding for size */
+      border-radius: 5px; /* Rounded corners */
+      font-size: 16px; /* Text size */
+      cursor: pointer; /* Pointer cursor on hover */
+    }
+
+    #Logoutb:hover {
+      background-color: #e55341; /* Darker tomato for hover effect */
+    }
+   #changePb {
+      background-color: #F5F5DC; /* Tomato color for background */
+      color: black; /* White text */
+      border: none; /* No border */
+      padding: 10px 20px; /* Add padding for size */
+      border-radius: 5px; /* Rounded corners */
+      font-size: 16px; /* Text size */
+      cursor: pointer; /* Pointer cursor on hover */
+    }
+
+    #changePb:hover {
+      background-color: #F5F5DC; /* Darker tomato for hover effect */
+    }
+</style>
+
+    </head>
+
+
+    <body onload="cities();
+            HideLogot()">
+
+
+
+
+        <div id="page">
+
+            <header class="header menu_fixed">
+                <div id="preloader"><div data-loader="circle-side"></div></div><!-- /Page Preload -->
+                <div id="logo">
+                    <a href="#">
+                        <img src="img/logo-without-background.png" style="margin-top: 6px;" width="150" height="36" alt="" class="logo_normal">
+                        <img src="img/logo.png" width="150" height="36" alt="" class="logo_sticky">
+                    </a>
+                </div>
+                <ul id="top_menu">
+                    <!--                        <li  ><span><a href="adventure.html">Signup</a></span></li>
+                                
+                                <li id="Logoutb"  style="display: none !important;" ><span><a href="adventure.html">Logout</a></span></li>
+                                
+                                <li id="changePb" style="display: none !important;" ><span><a href="adventure.html">Change Password</a></span></li>-->
+
+                    <input type="button" onclick="usersignup()" id="signupb" value="Signup" /></a>
+                    <input onclick="logoutClicked()" type="button" id="Logoutb" value="Logout" />
+                    <input onclick="changepassword()" type="button" id="changePb" value="Change Password" />
+
+                    <!--            <li><a href="cart-1.html" class="cart-menu-btn" title="Cart"><strong>4</strong></a></li>
+                                <li><a href="#sign-in-dialog" id="sign-in" class="login" title="Sign In">Sign In</a></li>
+                                <li><a href="wishlist.html" class="wishlist_bt_top" title="Your wishlist">Your wishlist</a></li>-->
+                </ul>
+                <!-- /top_menu -->
+                <a href="#menu" class="btn_mobile">
+                    <div class="hamburger hamburger--spin" id="hamburger">
+                        <div class="hamburger-box">
+                            <div class="hamburger-inner"></div>
+                        </div>
+                    </div>
+                </a>
+                <nav id="menu" class="main-menu">
+                    <ul>
+                        <li id="userOption" ><span><a href="#0">USER</a></span>
+                            <ul>
+                                <li><a href="/userlogin">Login</a></li>
+                                <li><a href="/usersignup">Signup</a></li>
+                            </ul>
+                        </li>
+                        <li><span><a href="#0">OWNER</a></span>
+                            <ul>
+                                <li><a href="/ologin">Login</a></li>
+                                <li><a href="/owner">Signup</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <span><a href="#0">ADMIN</a></span>
+                            <ul>
+                                <li><a href="/adminLogin">Login</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </nav>
+            </header>
+
+
+
+            <main>
+                <!-- START SLIDER -->
+                <div id="rev_slider_44_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="mask-showcase" data-source="gallery">
+                    <!-- Start revolution slider e5.4.8 fullscreen mode -->
+                    <div id="rev_slider_44" class="rev_slider fullscreenbanner" style="display:none;" data-version="5.4.8">
+                        <ul> 
+                            <!-- start slide 01 -->
+                            <li data-index="rs-73" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-rotate="0"  data-saveperformance="off"  data-title="01" data-param1="01" data-description="">
+                                <!-- main image -->
+                                <img src="revolution-slider/assets/images/slide_2.jpg" alt="" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+
+                                <div class="rev-slider-mask"></div> 
+
+                                <!-- main text layer -->
+                                <div class="tp-caption tp-resizeme text-white text-center"
+                                     id="slide-411-layer-01"
+                                     data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-whitespace="nowrap"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['-50','-50','-115','-65']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['70','53','60','35']"
+                                     data-lineheight="['70','59','70','39']"
+                                     data-letterspacing="['-2','-1','-1','-1']"
+                                     data-responsive="off"
+                                     data-responsive_offset="off"
+                                     data-paddingtop="['0','0','0','0']"
+                                     data-paddingbottom="['15','8','8','8']"
+                                     data-paddingright="['0','0','0','0']"
+                                     data-paddingleft="['0','0','0','0']"
+                                     style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600;">Start to Enjoy <br>unique places</div>
+
+                                <!-- small text layer -->
+                                <div class="tp-caption tp-resizeme text-white text-center"
+                                     id="slide-411-layer-02" 
+                                     data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['65','100','-5','15']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['19','16','19','14']"
+                                     data-lineheight="['28','14','23','20']"
+                                     data-letterspacing="['0.5','0.5','0.5','0.5']"
+                                     data-responsive="off"
+                                     data-responsive_offset="on">Top rated tours, hotels and restaurants.
+                                </div> 
+
+                                <!-- btn layer -->
+                                <!--                            <a class="tp-caption tp-resizeme rs-btn btn_1"
+                                                               href="tours-grid-isotope.html"
+                                                               id="slide-411-layer-03" 
+                                                               data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                                               data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
+                                                               data-whitespace="nowrap"
+                                                               data-type="button"
+                                                               data-responsive="off"
+                                                               data-responsive_offset="off"
+                                                               data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                                               data-textAlign="['center','center','center','center']">Get Started Now 
+                                                            </a>         -->
+                            </li>
+
+
+                            <li data-index="rs-74" data-transition="fadetotopfadefrombottom" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-rotate="0"  data-saveperformance="off"  data-title="02" data-param1="02" data-description="">
+                                <!-- main image -->
+                                <img src="revolution-slider/assets/images/slide_2.jpg" alt="" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+
+                                <div class="rev-slider-mask"></div> 
+
+                                <!-- main text layer -->
+                                <div class="tp-caption tp-resizeme alt-font text-white font-weight-600 text-center"
+                                     id="slide-411-layer-04" 
+                                     data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-whitespace="nowrap"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['-50','-50','-115','-65']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['70','53','60','35']"
+                                     data-lineheight="['70','59','70','39']"
+                                     data-letterspacing="['-2','-1','-1','-1']"
+                                     data-responsive="off"
+                                     data-responsive_offset="off"
+                                     data-paddingtop="['0','0','0','0']"
+                                     data-paddingbottom="['15','8','8','8']"
+                                     data-paddingright="['0','0','0','0']"
+                                     data-paddingleft="['0','0','0','0']"
+                                     style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600">Great places<br> to discover</div>
+
+                                <!-- small text layer -->
+                                <div class="tp-caption tp-resizeme text-white text-center"
+                                     id="slide-411-layer-05" 
+                                     data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['65','100','-5','15']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['19','13','19','14']"
+                                     data-lineheight="['28','14','23','20']"
+                                     data-letterspacing="['0.5','0.5','0.5','0.5']"
+                                     data-responsive="off"
+                                     data-responsive_offset="on">Top rated tours, hotels and restaurants.
+                                </div> 
+
+                                <!-- btn layer -->
+                                <!--                            <a class="tp-caption tp-resizeme rs-btn btn_1"
+                                                               href="tours-grid-sidebar.html"
+                                                               id="slide-411-layer-06" 
+                                                               data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                                               data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
+                                                               data-whitespace="nowrap"
+                                                               data-type="button"
+                                                               data-responsive="off"
+                                                               data-responsive_offset="off"
+                                                               data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                                               data-textAlign="['center','center','center','center']"
+                                                               data-paddingleft="['34','34','34','34']">Get Started Now 
+                                                            </a>       -->
+                            </li>
+                            <!-- end slide 02 -->
+                            <!-- start slide 03 -->
+                            <li data-index="rs-75" data-transition="fadetotopfadefrombottom" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off" data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-rotate="0"  data-saveperformance="off"  data-title="03" data-param1="03" data-description="">
+                                <!-- main image -->
+                                <img src="revolution-slider/assets/images/slide_3.jpg" alt="" data-bgcolor="#ccc" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="off" class="rev-slidebg" data-no-retina>
+
+                                <div class="rev-slider-mask"></div> 
+
+                                <!-- main text layer -->
+                                <div class="tp-caption tp-resizeme text-white text-center"
+                                     id="slide-411-layer-07" 
+                                     data-frames='[{"delay":200,"speed":2000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-whitespace="nowrap"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['-50','-50','-115','-65']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['70','53','60','35']"
+                                     data-lineheight="['70','59','70','39']"
+                                     data-letterspacing="['-2','-1','-1','-1']"
+                                     data-responsive="off"
+                                     data-responsive_offset="off"
+                                     data-paddingtop="['0','0','0','0']"
+                                     data-paddingbottom="['15','8','8','8']"
+                                     data-paddingright="['0','0','0','0']"
+                                     data-paddingleft="['0','0','0','0']"
+                                     style="text-shadow: 0 0 20px rgba(0,0,0,0.3); font-weight: 600">Finally...<br> it's time to relax</div>
+
+                                <!-- small text layer -->
+                                <div class="tp-caption tp-resizeme alt-font text-white font-weight-300 text-center"
+                                     id="slide-411-layer-08" 
+                                     data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                     data-type="text"
+                                     data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']" 
+                                     data-y="['middle','middle','middle','middle']" data-voffset="['65','100','-5','15']" 
+                                     data-width="auto"
+                                     data-height="auto"
+                                     data-fontsize="['19','13','19','14']"
+                                     data-lineheight="['28','14','23','20']"
+                                     data-letterspacing="['0.5','0.5','0.5','0.5']"
+                                     data-responsive="off"
+                                     data-responsive_offset="on">making your trip easy
+                                </div> 
+
+                                <!-- btn layer -->
+                                <!--                            <a class="tp-caption tp-resizeme rs-btn btn_1"
+                                                               href="tours-grid-sidebar.html"
+                                                               id="slide-411-layer-09" 
+                                                               data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
+                                                               data-y="['middle','middle','middle','middle']" data-voffset="['152','130','82','80']"
+                                                               data-whitespace="nowrap"
+                                                               data-type="button"
+                                                               data-responsive="off"
+                                                               data-responsive_offset="off"
+                                                               data-frames='[{"delay":1200,"speed":1000,"frame":"0","from":"y:[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:[-100%];s:inherit;e:inherit;","to":"o:1;","ease":"Power2.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"auto:auto;","ease":"Power3.easeInOut"}]'
+                                                               data-textAlign="['center','center','center','center']">Get Started Now 
+                                                            </a>-->
+                            </li>
+                            <!-- end slide 01 -->
+                        </ul>
+                    </div>
+                </div>
+                <!-- END REVOLUTION SLIDER -->
+
+                <!--		          <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                                                        <li><div class="score"><span>Superb<em>350 Reviews</em></span><strong>8.9</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                                <div class="item">
+                                                        <div class="box_grid">
+                                                                <figure>
+                                                                        <a href="#0" class="wish_bt"></a>
+                                                                        <a href="tour-detail.html"><img src="img/tour_2.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                                                        <small>Churches</small>
+                                                                </figure>
+                                                                <div class="wrapper">
+                                                                        <h3><a href="tour-detail.html">Notredam</a></h3>
+                                                                        <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+                                                                        <span class="price">From <strong>$124</strong> /per person</span>
+                                                                </div>
+                                                                <ul>
+                                                                        <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                                                        <li><div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                                <div class="item">
+                                                        <div class="box_grid">
+                                                                <figure>
+                                                                        <a href="#0" class="wish_bt"></a>
+                                                                        <a href="tour-detail.html"><img src="img/tour_3.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                                                        <small>Historic</small>
+                                                                </figure>
+                                                                <div class="wrapper">
+                                                                        <h3><a href="tour-detail.html">Versailles</a></h3>
+                                                                        <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+                                                                        <span class="price">From <strong>$25</strong> /per person</span>
+                                                                </div>
+                                                                <ul>
+                                                                        <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                                                        <li><div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                                <div class="item">
+                                                        <div class="box_grid">
+                                                                <figure>
+                                                                        <a href="#0" class="wish_bt"></a>
+                                                                        <a href="tour-detail.html"><img src="img/tour_3.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                                                        <small>Historic</small>
+                                                                </figure>
+                                                                <div class="wrapper">
+                                                                        <h3><a href="tour-detail.html">Versailles</a></h3>
+                                                                        <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+                                                                        <span class="price">From <strong>$25</strong> /per person</span>
+                                                                </div>
+                                                                <ul>
+                                                                        <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                                                        <li><div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                                <div class="item">
+                                                        <div class="box_grid">
+                                                                <figure>
+                                                                        <a href="#0" class="wish_bt"></a>
+                                                                        <a href="tour-detail.html"><img src="img/tour_4.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                                                        <small>Museum</small>
+                                                                </figure>
+                                                                <div class="wrapper">
+                                                                        <h3><a href="tour-detail.html">Pompidue Museum</a></h3>
+                                                                        <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+                                                                        <span class="price">From <strong>$45</strong> /per person</span>
+                                                                </div>
+                                                                <ul>
+                                                                        <li><i class="icon_clock_alt"></i> 2h 30min</li>
+                                                                        <li><div class="score"><span>Superb<em>350 Reviews</em></span><strong>9.0</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                                <div class="item">
+                                                        <div class="box_grid">
+                                                                <figure>
+                                                                        <a href="#0" class="wish_bt"></a>
+                                                                        <a href="tour-detail.html"><img src="img/tour_5.jpg" class="img-fluid" alt="" width="800" height="533"><div class="read_more"><span>Read more</span></div></a>
+                                                                        <small>Walking</small>
+                                                                </figure>
+                                                                <div class="wrapper">
+                                                                        <h3><a href="tour-detail.html">Tour Eiffel</a></h3>
+                                                                        <p>Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu.</p>
+                                                                        <span class="price">From <strong>$65</strong> /per person</span>
+                                                                </div>
+                                                                <ul>
+                                                                        <li><i class="icon_clock_alt"></i> 1h 30min</li>
+                                                                        <li><div class="score"><span>Good<em>350 Reviews</em></span><strong>7.5</strong></div></li>
+                                                                </ul>
+                                                        </div>
+                                                </div>
+                                                 /item 
+                                        </div>
+                                         /carousel 
+                                        <p class="btn_home_align"><a href="tours-grid-isotope.html" class="btn_1 rounded">View all Tours</a></p>
+                                        <hr class="large">
+                                </div>
+                                 /container -->
+
+                <div class="container container-custom margin_30_95" >
+                    <section class="add_bottom_45">
+                        <div class="main_title_3">
+                            <div class="main_title_2">
+                                <span><em></em></span>
+                                <h3>Connecting you to the corners of the Earth.</h3>
+                            </div>
+
+                            <!--                                        
+                                                                    
+                                                            </div>
+                            -->                            
+                            <div id="cities">
+
+                            </div>
+                            <!--
+                </div>
+                            <!--				<div class="row">
+                                                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                            <a href="hotel-detail.html" class="grid_item">
+                                                                                    <figure>
+                                                                                            <div class="score"><strong>8.9</strong></div>
+                                                                                            <img src="img/hotel_1.jpg" class="img-fluid" alt="">
+                                                                                            <div class="info">
+                                                                                                    <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                                                                    <h3>Mariott Hotel</h3>
+                                                                                            </div>
+                                                                                    </figure>
+                                                                            </a>
+                                                                    </div>-->
+                            <!-- /grid_item -->
+                            <!--					<div class="col-xl-3 col-lg-6 col-md-6">
+                                                                            <a href="hotel-detail.html" class="grid_item">
+                                                                                    <figure>
+                                                                                            <div class="score"><strong>7.9</strong></div>
+                                                                                            <img src="img/hotel_2.jpg" class="img-fluid" alt="">
+                                                                                            <div class="info">
+                                                                                                    <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                                                                    <h3>Concorde Hotel </h3>
+                                                                                            </div>
+                                                                                    </figure>
+                                                                            </a>
+                                                                    </div>
+                                                                     /grid_item 
+                                                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                            <a href="hotel-detail.html" class="grid_item">
+                                                                                    <figure>
+                                                                                            <div class="score"><strong>7.0</strong></div>
+                                                                                            <img src="img/hotel_3.jpg" class="img-fluid" alt="">
+                                                                                            <div class="info">
+                                                                                                    <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                                                                    <h3>Louvre Hotel</h3>
+                                                                                            </div>
+                                                                                    </figure>
+                                                                            </a>
+                                                                    </div>
+                                                                     /grid_item 
+                                                                    <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                            <a href="hotel-detail.html" class="grid_item">
+                                                                                    <figure>
+                                                                                            <div class="score"><strong>8.9</strong></div>
+                                                                                            <img src="img/hotel_4.jpg" class="img-fluid" alt="">
+                                                                                            <div class="info">
+                                                                                                    <div class="cat_star"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></div>
+                                                                                                    <h3>Park Yatt Hotel</h3>
+                                                                                            </div>
+                                                                                    </figure>
+                                                                            </a>
+                                                                    </div>
+                                                                     /grid_item 
+                                                            </div>
+                                                             /row 
+                                                            <a href="hotels-grid-isotope.html"><strong>View all (157) <i class="arrow_carrot-right"></i></strong></a>-->
+                            <!--			</section>-->
+                            <!-- /section -->
+
+                            <!--                        <section class="add_bottom_45">
+                                                        <div class="main_title_3">
+                                                            <span><em></em></span>
+                                                            <h2>Popular Restaurants</h2>
+                                                            <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <a href="restaurant-detail.html" class="grid_item">
+                                                                    <figure>
+                                                                        <div class="score"><strong>8.5</strong></div>
+                                                                        <img src="img/restaurant_1.jpg" class="img-fluid" alt="">
+                                                                        <div class="info">
+                                                                            <h3>Da Alfredo</h3>
+                                                                        </div>
+                                                                    </figure>
+                                                                </a>
+                                                            </div>
+                                                             /grid_item 
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <a href="restaurant-detail.html" class="grid_item">
+                                                                    <figure>
+                                                                        <div class="score"><strong>7.9</strong></div>
+                                                                        <img src="img/restaurant_2.jpg" class="img-fluid" alt="">
+                                                                        <div class="info">
+                                                                            <h3>Slow Food</h3>
+                                                                        </div>
+                                                                    </figure>
+                                                                </a>
+                                                            </div>
+                                                             /grid_item 
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <a href="restaurant-detail.html" class="grid_item">
+                                                                    <figure>
+                                                                        <div class="score"><strong>7.5</strong></div>
+                                                                        <img src="img/restaurant_3.jpg" class="img-fluid" alt="">
+                                                                        <div class="info">
+                                                                            <h3>Bella Napoli</h3>
+                                                                        </div>
+                                                                    </figure>
+                                                                </a>
+                                                            </div>
+                                                             /grid_item 
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <a href="restaurant-detail.html" class="grid_item">
+                                                                    <figure>
+                                                                        <div class="score"><strong>9.0</strong></div>
+                                                                        <img src="img/restaurant_4.jpg" class="img-fluid" alt="">
+                                                                        <div class="info">
+                                                                            <h3>Marcus</h3>
+                                                                        </div>
+                                                                    </figure>
+                                                                </a>
+                                                            </div>
+                                                             /grid_item 
+                                                        </div>
+                                                         /row 
+                                                        <a href="restaurants-grid-isotope.html"><strong>View all (157) <i class="arrow_carrot-right"></i></strong></a>
+                                                    </section>
+                                                     /section -->
+
+                            <div class="banner mb-0">
+                                <div class="wrapper d-flex align-items-center opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.3)">
+                                    <div>
+                                        <small>Adventure Awaits – Let’s Explore Together!</small>
+                                        <h3>Welcome to <br>Bon Voyage </h3>
+                                        <p>Discover a charming retreat where adventure meets comfort!</p>
+                                    </div>
+                                </div>
+                                <!-- /wrapper -->
+                            </div>
+                            <!-- /banner -->
+
+                        </div>
+                        <!-- /container -->
+
+                        <div class="bg_color_1">
+                            <div class="container margin_80_55">
+                                <div class="main_title_2">
+                                    <span><em></em></span>
+                                    <h3>News and Events</h3>
+                                    <p>Cum doctus civibus efficiantur in imperdiet deterruisset.</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <a class="box_news" href="#0">
+                                            <figure><img src="img/.jpg" alt="">
+                                                <figcaption><strong>1</strong></figcaption>
+                                            </figure>
+                                            <ul>
+                                                <li>Mark Twain</li>
+                                                <li>20.11.2017</li>
+                                            </ul>
+                                            <h4>Pri oportere scribentur eu</h4>
+                                            <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+                                        </a>
+                                    </div>
+                                    <!-- /box_news -->
+                                    <div class="col-lg-6">
+                                        <a class="box_news" href="#0">
+                                            <figure><img src="img/news_home_2.jpg" alt="">
+                                                <figcaption><strong>28</strong>Dec</figcaption>
+                                            </figure>
+                                            <ul>
+                                                <li>Jhon Doe</li>
+                                                <li>20.11.2017</li>
+                                            </ul>
+                                            <h4>Duo eius postea suscipit ad</h4>
+                                            <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+                                        </a>
+                                    </div>
+                                    <!-- /box_news -->
+                                    <div class="col-lg-6">
+                                        <a class="box_news" href="#0">
+                                            <figure><img src="img/news_home_3.jpg" alt="">
+                                                <figcaption><strong>28</strong>Dec</figcaption>
+                                            </figure>
+                                            <ul>
+                                                <li>Luca Robinson</li>
+                                                <li>20.11.2017</li>
+                                            </ul>
+                                            <h4>Elitr mandamus cu has</h4>
+                                            <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+                                        </a>
+                                    </div>
+                                    <!-- /box_news -->
+                                    <div class="col-lg-6">
+                                        <a class="box_news" href="#0">
+                                            <figure><img src="img/news_home_4.jpg" alt="">
+                                                <figcaption><strong>28</strong>Dec</figcaption>
+                                            </figure>
+                                            <ul>
+                                                <li>Paula Rodrigez</li>
+                                                <li>20.11.2017</li>
+                                            </ul>
+                                            <h4>Id est adhuc ignota delenit</h4>
+                                            <p>Cu eum alia elit, usu in eius appareat, deleniti sapientem honestatis eos ex. In ius esse ullum vidisse....</p>
+                                        </a>
+                                    </div>
+                                    <!-- /box_news -->
+                                </div>
+                                <!-- /row -->
+                                <!--                            <p class="btn_home_align"><a href="blog.html" class="btn_1 rounded">View all news</a></p>-->
+                            </div>
+                            <!-- /container -->
+                        </div>
+                        <!-- /bg_color_1 -->
+
+                        <div class="call_section">
+                            <div class="container clearfix">
+                                <div class="col-lg-5 col-md-6 float-end wow position-relative" data-wow-offset="250">
+                                    <div class="block-reveal">
+                                        <div class="block-vertical"></div>
+                                        <div class="box_1">
+                                            <h3 style="font-style: italic; font-weight: bold; color:whitesmoke; text-align: center; margin-top: 20px;">
+                                                Rest, Explore, Repeat – Bon Voyage Awaits!
+                                            </h3>
+                                            <h6 style="font-family: 'Arial', sans-serif; color:whitesmoke; text-align: center; margin-top: 10px;">
+                                                Your Home Away from Home.
+                                            </h6>
+
+                                            <!--                                        <h3><i>Rest, Explore, Repeat</i>– Bon Voyage Awaits!</h3>
+                                                                                    <h6>Your Home Away from Home.</h6>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/call_section-->
+                        </main>
+                        <div th:insert="footer" >
+                        </div>
+
+
+
+                </div>
+                <!-- page -->
+
+                <!-- Sign In Popup -->
+                <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+                    <div class="small-dialog-header">
+                        <h3>Sign In</h3>
+                    </div>
+                    <form>
+                        <div class="sign-in-wrapper">
+                            <a href="#0" class="social_bt facebook">Login with Facebook</a>
+                            <a href="#0" class="social_bt google">Login with Google</a>
+                            <div class="divider"><span>Or</span></div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" id="email">
+                                <i class="icon_mail_alt"></i>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" id="password" value="">
+                                <i class="icon_lock_alt"></i>
+                            </div>
+                            <div class="clearfix add_bottom_15">
+                                <div class="checkboxes float-start">
+                                    <label class="container_check">Remember me
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                            </div>
+                            <div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+                            <div class="text-center">
+                                Don’t have an account? <a href="register.html">Sign up</a>
+                            </div>
+                            <div id="forgot_pw">
+                                <div class="form-group">
+                                    <label>Please confirm login email below</label>
+                                    <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                                    <i class="icon_mail_alt"></i>
+                                </div>
+                                <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                                <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <!--form -->
+                </div>
+                <!-- /Sign In Popup -->
+
+                <div id="toTop"></div><!-- Back to top button -->
+
+                <!-- COMMON SCRIPTS -->
+                <script src="js/common_scripts.js"></script>
+                <script src="js/main.js"></script>
+                <script src="phpmailer/validate.js"></script>
+
+                <!-- SLIDER REVOLUTION SCRIPTS  -->
+                <script src="revolution-slider/js/jquery.themepunch.tools.min.js"></script>
+                <script src="revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.actions.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.carousel.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.kenburn.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.migration.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.navigation.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.parallax.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
+                <script src="revolution-slider/js/extensions/revolution.extension.video.min.js"></script>
+                <script>
+                var tpj = jQuery;
+
+                var revapi44;
+                tpj(document).ready(function () {
+                    if (tpj("#rev_slider_44").revolution == undefined) {
+                        revslider_showDoubleJqueryError("#rev_slider_44");
+                    } else {
+                        revapi44 = tpj("#rev_slider_44").show().revolution({
+                            sliderType: "standard",
+                            jsFileLocation: "revolution-slider/js/",
+                            sliderLayout: "fullscreen",
+                            dottedOverlay: "none",
+                            delay: 4500,
+                            navigation: {
+                                keyboardNavigation: "on",
+                                keyboard_direction: "horizontal",
+                                mouseScrollNavigation: "off",
+                                mouseScrollReverse: "default",
+                                onHoverStop: "off",
+                                touch: {
+                                    touchenabled: "on",
+                                    touchOnDesktop: "on",
+                                    swipe_threshold: 75,
+                                    swipe_min_touches: 1,
+                                    swipe_direction: "horizontal",
+                                    drag_block_vertical: false
+                                },
+                                arrows: {
+                                    enable: true,
+                                    style: 'erinyen',
+                                    tmp: '',
+                                    rtl: false,
+                                    hide_onleave: true,
+                                    hide_onmobile: true,
+                                    hide_under: 767,
+                                    hide_over: 9999,
+                                    hide_delay: 0,
+                                    hide_delay_mobile: 0,
+
+                                    left: {
+                                        container: 'slider',
+                                        h_align: 'left',
+                                        v_align: 'center',
+                                        h_offset: 60,
+                                        v_offset: 0
+                                    },
+
+                                    right: {
+                                        container: 'slider',
+                                        h_align: 'right',
+                                        v_align: 'center',
+                                        h_offset: 60,
+                                        v_offset: 0
+                                    }
+                                },
+                                bullets: {
+                                    enable: true,
+                                    style: 'zeus',
+                                    direction: 'horizontal',
+                                    rtl: false,
+
+                                    container: 'slider',
+                                    h_align: 'center',
+                                    v_align: 'bottom',
+                                    h_offset: 0,
+                                    v_offset: 30,
+                                    space: 7,
+
+                                    hide_onleave: false,
+                                    hide_onmobile: false,
+                                    hide_under: 0,
+                                    hide_over: 767,
+                                    hide_delay: 200,
+                                    hide_delay_mobile: 1200
+                                },
+                            },
+                            responsiveLevels: [1240, 1025, 778, 480],
+                            visibilityLevels: [1920, 1500, 1025, 768],
+                            gridwidth: [1200, 991, 778, 480],
+                            gridheight: [1025, 1366, 1025, 868],
+                            lazyType: "none",
+                            shadow: 0,
+                            spinner: "spinner4",
+                            stopLoop: "off",
+                            stopAfterLoops: -1,
+                            stopAtSlide: -1,
+                            shuffle: "off",
+                            autoHeight: "on",
+                            fullScreenAutoWidth: "on",
+                            fullScreenAlignForce: "off",
+                            fullScreenOffsetContainer: "",
+                            disableProgressBar: "on",
+                            hideThumbsOnMobile: "on",
+                            hideSliderAtLimit: 0,
+                            hideCaptionAtLimit: 0,
+                            hideAllCaptionAtLimit: 0,
+                            debugMode: false,
+                            fallbacks: {
+                                simplifyAll: "off",
+                                nextSlideOnWindowFocus: "off",
+                                disableFocusListener: false,
+                            }
+                        });
+                    }
+                });
+                </script>
+
+                <!-- COLOR SWITCHER  -->
+                <!--            <script src="js/switcher.js"></script>-->
+                <!--            <div id="style-switcher">
+                                <h6>Color Switcher <a href="#"><i class="ti-settings"></i></a></h6>
+                                <div>
+                                    <ul class="colors" id="color1">
+                                        <li>
+                                            <a href="#" class="default" title="Default"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="aqua" title="Aqua"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="green_switcher" title="Green"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="orange" title="Orange"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="blue" title="Blue"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="beige" title="Beige"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="gray" title="Gray"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="green-2" title="Green"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="navy" title="Navy"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="peach" title="Peach"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="purple" title="Purple"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="red" title="Red"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="violet" title="Violet"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>-->
+                <span id="uemail" th:text="${session.uemail}"></span>
+                </body>
+                </html>

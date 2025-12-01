@@ -1,0 +1,141 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <style>
+      /* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #dbeafe; /* Light blue background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  display: flex; /* Use flexbox for horizontal alignment */
+  flex-direction: row; /* Ensures side-by-side layout */
+  overflow: hidden;
+}
+
+
+.left-section {
+  flex: 1; /* Takes up 50% of the space */
+  background-color: #f0f4ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.right-section {
+  flex: 1; /* Takes up the other 50% of the space */
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Align content vertically */
+}
+
+
+.unseen {
+  width: 80%;
+  max-width: 300px;
+}
+
+
+.right-section h2 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.right-section p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background-color: #1e3a8a;
+}
+
+.btn.secondary {
+  background-color: #f3f4f6;
+  color: #333;
+}
+
+.btn.secondary:hover {
+  background-color: #e5e7eb;
+}
+
+      </style>
+</head>
+<body>
+  <div class="container">
+    <div class="login-box">
+      <div class="left-section">
+        <img src="https://i.pinimg.com/736x/c6/4e/f6/c64ef6e8afea461b0485368a3b1b5e89.jpg"  class="unseen">
+      </div>
+      <div class="right-section">
+        <h2>Sign In</h2>
+        <p>Unlock your world.</p>
+        <form>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your password" required>
+          </div>
+          <button type="submit" class="btn primary">Sign In</button>
+          <button type="button" class="btn secondary">Create an account</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

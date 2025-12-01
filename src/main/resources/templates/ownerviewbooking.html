@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">-->
+    <title>Bon voyage</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/vendors.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    <link href="#" id="colors" rel="stylesheet">
+    <style>
+        /* Styling for the table container */
+/*table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+ Styling the table headers 
+th {
+    background-color: #007BFF;  Blue header background 
+    color: white;  White text 
+    text-align: left;
+    padding: 12px;
+    font-size: 16px;
+}
+
+ Styling the table rows 
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+ Alternating row colors 
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+ Hover effect on rows 
+tr:hover {
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+ Styling for the main container 
+body {
+    background-color: #f0f4f8;  Light gray background 
+    color: #333;  Dark text color 
+}
+
+ Center the heading 
+h1 {
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #0056b3;
+    margin-bottom: 20px;
+}
+
+ Add border radius to the table cells 
+td, th {
+    border-radius: 4px;
+}*/
+/* General table styling */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: separate; /* For rounded corners to work */
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-spacing: 0; /* Removes unwanted spacing */
+    border: 2px solid #007BFF; /* Blue outer border */
+    border-radius: 8px; /* Smooth corners */
+    overflow: hidden;
+}
+
+/* Table headers */
+th {
+    background-color: #007BFF; /* Blue header background */
+    color: white; /* White text */
+    text-align: left;
+    padding: 12px;
+    font-size: 16px;
+    border-bottom: 2px solid #0056b3; /* Darker blue bottom border */
+}
+
+/* Table cells */
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd; /* Subtle divider between rows */
+    text-align: left;
+    font-size: 14px;
+}
+
+/* Alternating row colors for better readability */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Light gray */
+}
+
+/* Hover effect on rows */
+tr:hover {
+    background-color: #ddd; /* Highlight row on hover */
+    cursor: pointer;
+}
+
+/* Add border radius to table corners */
+td:first-child,
+th:first-child {
+    border-left: none; /* Remove inner borders on the left */
+}
+
+td:last-child,
+th:last-child {
+    border-right: none; /* Remove inner borders on the right */
+}
+
+    </style>
+    <script>
+
+            function alreadymanageslots() {
+                var url = "/viewbooking";
+
+                fetch(url, {method: "Get"})
+                        .then(response => response.json())
+                        .then(ans => showalreadymanageslots(ans));
+            }
+
+            function showalreadymanageslots(ans) {
+                
+                console.log(ans);
+                var arr = ans.ans;
+                var s = "";
+                s = s + "<div class='container'>";
+                s = s + "<h1 class='text-primary pb-3' style='text-align:center;font-size:30px;margin-top:20px;margin-bottom:30px;'>Bookings</h1>";
+
+            
+                s = s + "<table class='table table-primary table-bordered table-hover table-primary text-primary mb-3'>";
+                s = s + "<tr>";
+                s = s + "<th style='text-align:center; color: white;' class='text-primary'>Booking Id</th>";
+                s = s + "<th style='text-align:center; color: white;' class='text-primary'>User Email</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Start Date</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>End Date</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Total Price</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Payment Type</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Address</th>";
+
+                s = s + "</tr>";
+
+                for (var i = 0; i < arr.length; i++) {
+                    s = s + "<tr>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].id + "</td>";
+                     s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].user_email + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].start_date + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].end_date + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].total_price + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].payment_type + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].address+ "</td>";
+                    s = s + "</tr>";
+                }
+//
+                s = s + "</table>";
+              s = s + "</div>"; 
+
+                document.getElementById("t1").innerHTML = s;
+            }
+            
+            
+//            function aproveSlot(booking_id) {
+//              
+//                var url = "./approvedoctocslot?_id=" + booking_id;
+//
+//                fetch(url, {method: "GET"})
+//                        .then(response => response.text())
+//                        .then(ans => renderAsHtml2(ans));
+//            }
+//
+//            function renderAsHtml2(ans)
+//            {
+//
+//              
+//
+//                if (ans === "success")
+//                {
+//
+//                    alreadymanageslots();
+//
+//                } else if (ans === "fail")
+//                {
+//                    alert("Approved failed")
+//                } else if (ans === "exception")
+//                {
+//
+//                }
+//
+//
+//            }
+//
+//            function blockSlot(booking_id) {
+//
+//
+//
+//                var url = "./blockdoctorslot?booking_id=" + booking_id;
+//
+//                fetch(url, {method: "GET"})
+//                        .then(response => response.text())
+//                        .then(ans => renderAsHtml12(ans));
+//            }
+//
+//            function renderAsHtml12(ans)
+//            {
+//
+//              
+//
+//                if (ans === "success")
+//                {
+//
+//                    alreadymanageslots();
+//
+//                } else if (ans === "fail")
+//                {
+//                    alert("Blocked failed")
+//                } else if (ans === "exception")
+//                {
+//
+//                }             }
+  
+        </script>
+    
+    </head>
+    <body onload="alreadymanageslots()" >
+       <main>                
+                <div id="t1" >
+                    
+                </div>
+
+		
+		
+
+		
+
+	
+	
+       </main>
+	
+	
+    <script src="js/common_scripts.js"></script>
+    <script src="js/main.js"></script>
+	<script src="phpmailer/validate.js"></script>
+	
+	<!-- DATEPICKER  -->
+	<script>
+	$(function() {
+	  'use strict';
+	  $('input[name="dates"]').daterangepicker({
+		  autoUpdateInput: false,
+		  minDate:new Date(),
+		  locale: {
+			  cancelLabel: 'Clear'
+		  }
+	  });
+	  $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+		  $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
+	  });
+	  $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+		  $(this).val('');
+	  });
+	});
+	</script>
+	
+	<!-- INPUT QUANTITY  -->
+	<script src="js/input_qty.js"></script>
+
+	<!-- Autocomplete -->
+    <script>
+    function initMap() {
+	  var input = document.getElementById('autocomplete');
+	  var autocomplete = new google.maps.places.Autocomplete(input);
+	 
+	  autocomplete.addListener('place_changed', function() {
+	    var place = autocomplete.getPlace();
+	    if (!place.geometry) {
+	      window.alert("Autocomplete's returned place contains no geometry");
+	      return;
+	    }
+
+	    var address = '';
+	    if (place.address_components) {
+	      address = [
+	        (place.address_components[0] && place.address_components[0].short_name || ''),
+	        (place.address_components[1] && place.address_components[1].short_name || ''),
+	        (place.address_components[2] && place.address_components[2].short_name || '')
+	      ].join(' ');
+	    } 
+	  });
+	}
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Vck_vRXDPR8ILH8ZLOeGSEz_n4YR0mU&amp;libraries=places&amp;callback=initMap"></script>
+
+	<!-- COLOR SWITCHER  -->
+<!--    <script src="js/switcher.js"></script>
+    <div id="style-switcher">
+        <h6>Color Switcher <a href="#"><i class="ti-settings"></i></a></h6>
+        <div>
+            <ul class="colors" id="color1">
+                <li>
+                    <a href="#" class="default" title="Default"></a>
+                </li>
+                <li>
+                    <a href="#" class="aqua" title="Aqua"></a>
+                </li>
+                <li>
+                    <a href="#" class="green_switcher" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="orange" title="Orange"></a>
+                </li>
+                <li>
+                    <a href="#" class="blue" title="Blue"></a>
+                </li>
+                <li>
+                    <a href="#" class="beige" title="Beige"></a>
+                </li>
+                <li>
+                    <a href="#" class="gray" title="Gray"></a>
+                </li>
+                <li>
+                    <a href="#" class="green-2" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="navy" title="Navy"></a>
+                </li>
+                <li>
+                    <a href="#" class="peach" title="Peach"></a>
+                </li>
+                <li>
+                    <a href="#" class="purple" title="Purple"></a>
+                </li>
+                <li>
+                    <a href="#" class="red" title="Red"></a>
+                </li>
+                <li>
+                    <a href="#" class="violet" title="Violet"></a>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+	
+</body>
+
+
+</html>
+
+
+    

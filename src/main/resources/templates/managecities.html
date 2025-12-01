@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+    <meta name="author" content="Ansonika">
+    <title>Panagea | Premium site template for travel agencies, hotels and restaurant listing.</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link rel="preconnect" href="https://fonts.gstatic.com/">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/vendors.css" rel="stylesheet">
+
+    <!-- ALTERNATIVE COLORS CSS -->
+    <link href="#" id="colors" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function add(){
+            var nm = document.getElementById("name").value;
+            var des = document.getElementById("description").value;
+            var photo=document.getElementById("photo").files[0];
+             if (nm === "" || des === "") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something missing',
+                        text: 'All fields are mandatory',
+                        confirmButtonColor: '#d33', 
+                        background: '#ffeded', 
+                    });
+                    return; 
+                }
+                var url = "/managecities";
+                    var formdata = new FormData();
+                    formdata.append("city", nm);
+                    formdata.append("description", des);
+                    formdata.append("photo", photo);
+//            var url = "/managecities?name=" + nm + "&des=" + des;
+            
+
+            fetch(url, {method: "Post",body:formdata})
+                    .then(response => response.text())
+                    .then(ans => renderAsHtml(ans));
+        }
+        
+
+
+ function renderAsHtml(ans)
+        {
+           if (ans === "success")
+                {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'City added',
+                        text: 'You have successfully added a city!',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3085d6', // Custom button color
+                        background: '#f4f6f9' // Light background for aesthetics
+                    }).then((result) => {
+                        // Check if the confirm button was clicked
+                        if (result.isConfirmed) {
+                            window.location.href = "/adminhome";
+                        }
+                    });
+
+                } else
+                {
+                    alert("Login Failed")
+                    Swal.fire({
+                        icon: "error",
+                        title: "City can't be added",
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    setTimeout(3000);
+                     }
+                    }
+function alreadyAddedCities() {
+                var url = "/alreadyAddedCities";
+                fetch(url, {method: "Get"})
+                        .then(response => response.text())
+                        .then(ans => showAlreadyAddedCities(ans));
+            }
+
+            function showAlreadyAddedCities(ans) {
+//                console.log(ans);
+                var obj = JSON.parse(ans);
+                var arr = obj.ans;
+                console.log(arr)
+                var s = "";
+                s = s + "<div class='container'>";
+                s = s + "<h1 class='text-dark' style='text-align:center'>Already Added Cities</h1>";
+                s = s + "<table class='table table-info table-bordered table-hover'>";
+                s = s + "<tr>";
+                s = s + "<th style='text-align:center'>City</th>";
+                s = s + "<th style='text-align:center'>City Description</th>";
+                                    s=s+"<th style='text-align:center'>Photo</th>";
+                                    s=s+"<th style='text-align:center'>Remove</th>";
+                for (var i = 0; i < arr.length; i++)
+                {
+                    s = s + "<tr>";
+                    s = s + "<td style='text-align:center' class='pt-5'>" + arr[i].city + "</td>";
+                    s = s + "<td style='text-align:center' class='pt-5'>" + arr[i].description + "</td>";
+                    s = s + "<td style='text-align:center'class='pt-5'><img src=" + arr[i].photo + " style='height:200px;width:300px;'></td>";
+                    s = s + "<td style='text-align:center' class='pt-5'><input type='button' value='Delete' class='btn btn-danger' onclick=\"del('" + arr[i].city+ "')\"></td>";
+                    s = s + "</tr>";
+                }
+                s = s + "</table>";
+                s = s + "</div>";
+                document.getElementById("t1").innerHTML = s;
+            }
+            function del(city) {
+                var url = "/deletedcities?city=" + city;
+                fetch(url, {method: "Get"})
+                        .then(response => response.text())
+                        .then(ans => deleteCities(ans));
+            }
+            function deleteCities(ans)
+            {
+                if (ans == "delete") {
+
+
+
+
+                }
+                setTimeout(3000);
+                alreadyAddedCities();
+            }
+            
+
+        </script>
+
+    </head>
+    <body onload="alreadyAddedCities()">
+        <div th:insert="ownernavbar"></div>
+	
+	<main>
+		<section class="hero_single version_3">
+			<div class="wrapper">
+				<div class="container">
+					<div class="main_search">
+						<h3>Manage Cities</h3>
+						<!--<p></p>-->
+						<form>
+						<div class="custom-search-input-2">
+							<div class="form-group">
+									<input class="form-control" type="text" placeholder="Enter city" id="name">
+									
+								</div>
+								<div class="form-group">
+									<input class="form-control" type="text"  placeholder="City Description" id="description">
+									
+								</div>
+                                                    <div class="form-group">
+									<input class="form-control" type="file" accept="image/*"  placeholder="photo" id="photo">
+									
+								</div>
+							
+
+								<!--</div>-->
+							<div class="form-group text-end">
+								<input type="button" class="btn_1 rounded full-width" value="add" onclick="add()">
+							</div>
+						</div>
+						<!-- /row -->
+					</form>
+					</div>
+					<!-- /main_search -->	
+				</div>
+			</div>
+		</section>
+		<!-- /hero_single -->
+                
+                <div id="t1" >
+                    
+                </div>
+
+
+		
+	</main>
+	
+
+
+	
+	
+	
+	
+	
+	<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+		<div class="small-dialog-header">
+			<h3>Sign In</h3>
+		</div>
+		<form>
+			<div class="sign-in-wrapper">
+				<a href="#0" class="social_bt facebook">Login with Facebook</a>
+				<a href="#0" class="social_bt google">Login with Google</a>
+				<div class="divider"><span>Or</span></div>
+				<div class="form-group">
+					<label>Email</label>
+					<input type="email" class="form-control" name="email" id="email">
+					<i class="icon_mail_alt"></i>
+				</div>
+				<div class="form-group">
+					<label>Password</label>
+					<input type="password" class="form-control" name="password" id="password" value="">
+					<i class="icon_lock_alt"></i>
+				</div>
+				<div class="clearfix add_bottom_15">
+					<div class="checkboxes float-start">
+						<label class="container_check">Remember me
+						  <input type="checkbox">
+						  <span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+				</div>
+				<div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+				<div class="text-center">
+					Don’t have an account? <a href="register.html">Sign up</a>
+				</div>
+				<div id="forgot_pw">
+					<div class="form-group">
+						<label>Please confirm login email below</label>
+						<input type="email" class="form-control" name="email_forgot" id="email_forgot">
+						<i class="icon_mail_alt"></i>
+					</div>
+					<p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+					<div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+				</div>
+			</div>
+		</form>
+		<!--form -->
+	</div>
+	<!-- /Sign In Popup -->
+	
+	<div id="toTop"></div><!-- Back to top button -->
+	
+	<!-- COMMON SCRIPTS -->
+    <script src="js/common_scripts.js"></script>
+    <script src="js/main.js"></script>
+	<script src="phpmailer/validate.js"></script>
+	
+	<!-- DATEPICKER  -->
+	<script>
+	$(function() {
+	  'use strict';
+	  $('input[name="dates"]').daterangepicker({
+		  autoUpdateInput: false,
+		  minDate:new Date(),
+		  locale: {
+			  cancelLabel: 'Clear'
+		  }
+	  });
+	  $('input[name="dates"]').on('apply.daterangepicker', function(ev, picker) {
+		  $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
+	  });
+	  $('input[name="dates"]').on('cancel.daterangepicker', function(ev, picker) {
+		  $(this).val('');
+	  });
+	});
+	</script>
+	
+	<!-- INPUT QUANTITY  -->
+	<script src="js/input_qty.js"></script>
+
+	<!-- Autocomplete -->
+    <script>
+    function initMap() {
+	  var input = document.getElementById('autocomplete');
+	  var autocomplete = new google.maps.places.Autocomplete(input);
+	 
+	  autocomplete.addListener('place_changed', function() {
+	    var place = autocomplete.getPlace();
+	    if (!place.geometry) {
+	      window.alert("Autocomplete's returned place contains no geometry");
+	      return;
+	    }
+
+	    var address = '';
+	    if (place.address_components) {
+	      address = [
+	        (place.address_components[0] && place.address_components[0].short_name || ''),
+	        (place.address_components[1] && place.address_components[1].short_name || ''),
+	        (place.address_components[2] && place.address_components[2].short_name || '')
+	      ].join(' ');
+	    } 
+	  });
+	}
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Vck_vRXDPR8ILH8ZLOeGSEz_n4YR0mU&amp;libraries=places&amp;callback=initMap"></script>
+
+	<!-- COLOR SWITCHER  -->
+<!--    <script src="js/switcher.js"></script>
+    <div id="style-switcher">
+        <h6>Color Switcher <a href="#"><i class="ti-settings"></i></a></h6>
+        <div>
+            <ul class="colors" id="color1">
+                <li>
+                    <a href="#" class="default" title="Default"></a>
+                </li>
+                <li>
+                    <a href="#" class="aqua" title="Aqua"></a>
+                </li>
+                <li>
+                    <a href="#" class="green_switcher" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="orange" title="Orange"></a>
+                </li>
+                <li>
+                    <a href="#" class="blue" title="Blue"></a>
+                </li>
+                <li>
+                    <a href="#" class="beige" title="Beige"></a>
+                </li>
+                <li>
+                    <a href="#" class="gray" title="Gray"></a>
+                </li>
+                <li>
+                    <a href="#" class="green-2" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="navy" title="Navy"></a>
+                </li>
+                <li>
+                    <a href="#" class="peach" title="Peach"></a>
+                </li>
+                <li>
+                    <a href="#" class="purple" title="Purple"></a>
+                </li>
+                <li>
+                    <a href="#" class="red" title="Red"></a>
+                </li>
+                <li>
+                    <a href="#" class="violet" title="Violet"></a>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+		<div th:insert="footer" >
+            </div>
+</body>
+
+
+</html>

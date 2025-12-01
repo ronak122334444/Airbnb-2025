@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <!-- Mirrored from www.ansonika.com/panagea/hotel-detail.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 10 Mar 2023 10:17:16 GMT -->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+        <meta name="author" content="Ansonika">
+        <title>Panagea | Premium site template for travel agencies, hotels and restaurant listing.</title>
+
+        <!-- Favicons-->
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+        <!-- GOOGLE WEB FONT -->
+        <link rel="preconnect" href="https://fonts.gstatic.com/">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+        <!-- BASE CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/vendors.css" rel="stylesheet">
+
+        <!-- ALTERNATIVE COLORS CSS -->
+        <link href="#" id="colors" rel="stylesheet">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"><!-- comment -->
+        <script>
+            function detail()
+            {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                var formdata = new FormData();
+                formdata.append("id", id);
+
+                var url = "/propertyDetail";
+                fetch(url, {method: "POST", body: formdata})
+                        .then(response => response.json())
+                        .then(ans => renderAsHtml(ans));
+            }
+
+            function renderAsHtml(ans)
+            {
+//                console.log(ans);
+                const arr = ans.ans;
+                document.getElementById("description2").innerHTML = arr[0].description;
+                document.getElementById("price1").innerHTML = "<del style=\"color: red\" >Price: ₹" + arr[0].price + "</del>";
+                document.getElementById("offerprice").innerHTML =  + arr[0].offer_price;
+
+//                document.getElementById("dname").innerHTML = arr[0].dname;
+//                document.getElementById("contact").innerHTML = arr[0].contact;
+//                document.getElementById("description").innerHTML = arr[0].description;
+//                document.getElementById("emails").innerHTML = arr[0].demail;
+//                document.getElementById("amount").innerHTML = arr[0].amount;
+//
+                var latitude = arr[0].latitude;
+                var longitude = arr[0].longitude;
+//
+
+                document.getElementById("gmap_canvas").src = "https://maps.google.com/maps?q=" + latitude + "," + longitude + "&ie=UTF8&iwloc=&output=embed";
+//                document.getElementById("amount").innerHTML = "&#8377; " + arr[0].amount + " per hour";
+//                document.getElem < div th:insert = "usernavbar" > </div>entById("main-img").src = arr[0].photo;
+            }
+
+        </script>
+        
+        <script>
+            function morephotos()
+            {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                var formdata = new FormData();
+                formdata.append("id", id);
+
+                var url = "/propertyPhotos";
+                fetch(url, {method: "POST", body: formdata})
+                        .then(response => response.text())
+                        .then(ans => renderAsHtmlPhotos(ans));
+            }
+            
+            function renderAsHtmlPhotos(ans)
+            {
+                var obj = JSON.parse(ans);
+                var arr = obj.ans;
+                var s = "";
+                
+                s += "<div class=\"pictures_grid magnific-gallery clearfix\">";
+                 for (var i = 0; i < arr.length; i++)
+                {
+                    s += `
+  <figure>
+    <a href="${arr[i].photo}" style="width: 110px" title="Photo title" data-effect="mfp-zoom-in">
+      <img style="width: 110px" src="${arr[i].photo}" alt="">
+    </a>
+  </figure>
+`;
+
+                }
+                
+                s += "</div>";
+                console.log(s);
+                document.getElementById("morephotos").innerHTML = s;
+
+                                
+            }
+
+        </script>
+
+        <script>
+            function check()
+            {
+                var grand = document.getElementById("grand").innerHTML;
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                if (grand == null)
+                {
+                    alert("Please select Start and End Date")
+//                    Swal.fire({
+//                        title: "OOps!!",
+//                        text: "Please Select Start and End Date.",
+//                        icon: "error"
+//                    });
+
+                } else if (grand == 0)
+                {
+                    alert("Please Select Different Start and end date")
+//                    Swal.fire({
+//                        title: "Success",
+//                        text: "Please Select Different Start and end date.",
+//                        icon: "error"
+//                    });
+                } else
+                {
+                    var startdate = document.getElementById("startdate").value;
+                    var enddate = document.getElementById("enddate").value;
+
+                    var url = "/check_date?id=" + id + "&start=" + startdate + "&end=" + enddate;
+
+                    fetch(url)
+                            .then(response => response.text())
+                            .then(ans => renderAsHtml4(ans));
+                }
+
+            }
+            function renderAsHtml4(ans)
+            {
+
+                if (ans === 'success')
+                {
+
+                    var grand = document.getElementById("grand").innerHTML;
+                    
+                   const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+                
+                    var startdate = document.getElementById("startdate").value;
+                    var enddate = document.getElementById("enddate").value;
+                    window.location.href = "/payment?detail_id=" + id + "&grand=" + grand + "&start=" + startdate + "&end=" + enddate;
+                } else
+                {
+                    alert("Dates not available, Please select another dates.");
+//                    Swal.fire({
+//                        title: "OOpss!!",
+//                        text: "Dates not available, Please select another dates.",
+//                        icon: "error"
+//                    });
+                }
+            }
+    
+        </script>
+        
+        <script>
+            var xhr = new XMLHttpRequest();
+            function review()
+            {
+                $("#myModal1").modal("show");
+            }
+
+            var n = 0;
+            function fill(obj)
+            {
+                var img = obj.src;
+                var id = obj.id;
+                var val = parseInt(id.substring(id.indexOf("_") + 1));
+                var i;
+                if (n === 0)
+                {
+                    i = 1;
+                } else
+                {
+                    i = n + 1;
+                }
+                for (; i <= 5; i++)
+                {
+                    if (i <= val)
+                    {
+                        document.getElementById("rating_" + i).src = "rating/filled_star.png";
+
+                    } else
+                    {
+                        document.getElementById("rating_" + i).src = "rating/empty_star.png";
+                    }
+                }
+
+            }
+            function selected(obj)
+            {
+                var id = obj.id;
+                var val = parseInt(id.substring(id.indexOf("_") + 1));
+                n = val;
+            }
+            function unfill(obj)
+            {
+                var i;
+                if (n === 0)
+                {
+                    i = 1;
+                } else
+                {
+                    i = n + 1;
+                }
+                for (; i <= 5; i++)
+                {
+                    document.getElementById("rating_" + i).src = "rating/empty_star.png";
+                }
+            }
+
+            function addreview()
+            {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                var comment = document.getElementById("comment").value;
+                
+
+                var url = "./userAddReview?doctor_email=" + id + "&rating=" + n + "&comment=" + comment;
+
+                fetch(url).then(response => response.text())
+                        .then(ans => renderAddReviewResponse(ans));
+
+
+            }
+
+            function renderAddReviewResponse(ans) {
+                alert(ans);
+            }
+
+            function userShowRatings() 
+            {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                //1. Make object of XMLHttpRequest
+                var xhttp = new XMLHttpRequest();
+
+                //4. Receive XMLHttpResponse from server & use ans
+
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = this.responseText;
+                        res = res.trim();
+                        var mainobj = JSON.parse(res);
+                        var arr = mainobj["ans"];
+
+                        var ren = "";
+
+                        for (var i = 0; i < arr.length; i++)
+                        {
+                            var st = arr[i];
+                            ren += "<div class=\"row\" >";
+
+                            ren += "<div class= \"col-sm-6\" style=\"text-align: center\" >";
+                            ren += "<div class=\"card-body\">";
+                            for (var j = 0; j < st.rating; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/filled_star.png\" >";
+                            }
+                            for (var j = st.rating; j < 5; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/empty_star.png\" >";
+                            }
+                            ren += "</div>";
+                            ren += "</div>";
+
+                            ren += "<div class= \"col-sm-3\" style=\"text-align: center\" >";
+                            ren += "<div class=\"card-body\">";
+                            ren += "<label class=\"card-text text-alli\" style=\"font-size: 16px;text-align: center;color: #005b9a\" ><b>Comment : </b><br>" + st.comment + "</label><br><br>";
+                            ren += "</div>";
+                            ren += "</div>";
+
+                            ren += "<div class= \"col-sm-3\" style=\"text-align: center\" >";
+                            ren += "<div class=\"card-body\">";
+                            ren += "<label class=\"card-text text-alli\" style=\"font-size: 16px;text-align: center;color: #005b9a\" ><b>User Email : </b><br>" + st.user_email + "</label><br><br>";
+                            ren += "</div>";
+                            ren += "</div>";
+                            ren += "</div>";
+
+                        }
+
+                        document.getElementById("showratings").innerHTML = ren;
+                        averageRating();
+                    }
+                };
+                //2. Prepare request (Define target --> servlet)
+                xhttp.open("GET", "./userShowRatings?doctor_email=" + id, true);
+
+                //3. Send Request
+                xhttp.send();
+            }
+
+            function averageRating() 
+            {
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get("id");
+
+                //1. Make object of XMLHttpRequest
+                var xhttp = new XMLHttpRequest();
+
+                //4. Receive XMLHttpResponse from server & use ans
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = this.responseText;
+                        res = res.trim();
+//                        alert(res);
+                        var mainobj = JSON.parse(res);
+                        var arr = mainobj["ans"];
+
+                        var ren = "";
+
+                        var st = arr[0];
+                        var rating2 = st.r1;
+                        var getdecimal = rating2.toString().split(".")[1];
+                        if (parseInt(getdecimal) == 0) {
+                            ren += "<div class= \"col-sm-12\" style=\"text-align: center\" >";
+                            ren += "<div class=\"card-body\">";
+                            for (var j = 0; j < st.r1; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/filled_star.png\" >";
+                            }
+                            for (var j = st.r1; j < 5; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/empty_star.png\" >";
+                            }
+                            ren += "</div>";
+                            ren += "</div>";
+                        } else {
+                            ren += "<div class= \"col-sm-12\" style=\"text-align: center\" >";
+                            ren += "<div class=\"card-body\">";
+                            for (var j = 0; j < st.r1 - 1; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/filled_star.png\" >";
+                            }
+                            ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/download.jpg\" >";
+                            for (var j = st.r1; j < 4; j++) {
+                                ren += "<img class=\"img-thumbnail\" style=\"border: 2px solid black; border-radius: 10px;width: 20px; height: 20px\" src=\"rating/empty_star.png\" >";
+                            }
+                            ren += "</div>";
+                            ren += "</div>";
+                        }
+
+                        document.getElementById("averagerating").innerHTML = ren;
+                    }
+                };
+                //2. Prepare request (Define target --> servlet)
+                xhttp.open("GET", "./userShowAverageRatings?doctor_email=" + id, true);
+
+                //3. Send Request
+                xhttp.send();
+            }
+        </script>
+
+    </head>
+
+    <body class="datepicker_mobile_full" onload="detail();userShowRatings();averageRating();morephotos()">
+        <div th:insert="usernavbar"></div>
+
+        <main>
+            <section class="hero_in hotels_detail">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1 class="fadeInUp"><span></span>Hotel detail page</h1>
+                    </div>
+<!--                    <span class="magnific-gallery">
+                        <a href="img/gallery/hotel_list_1.jpg" class="btn_photos" title="Photo title" data-effect="mfp-zoom-in">View photos</a>
+                        <a href="img/gallery/hotel_list_2.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+                        <a href="img/gallery/hotel_list_3.jpg" title="Photo title" data-effect="mfp-zoom-in"></a>
+                    </span>-->
+                </div>
+            </section>
+
+
+            <div class="bg_color_1">
+                <nav class="secondary_nav sticky_horizontal">
+                    <div class="container">
+                        <ul class="clearfix">
+                            <li><a href="#description" class="active">Description</a></li>
+                            <li><a href="#reviews">Reviews</a></li>
+                            <li><a href="#sidebar">Booking</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container margin_60_35">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <section id="description">
+                                <!--                                    <h2>Description</h2>
+                                                                    <p>Per consequat adolescens ex, cu nibh commune <strong>temporibus vim</strong>, ad sumo viris eloquentiam sed. Mea appareat omittantur eloquentiam ad, nam ei quas oportere democritum. Prima causae admodum id est, ei timeam inimicus sed. Sit an meis aliquam, cetero inermis vel ut. An sit illum euismod facilisis, tamquam vulputate pertinacia eum at.</p>
+                                                                    <p>Cum et probo menandri. Officiis consulatu pro et, ne sea sale invidunt, sed ut sint <strong>blandit</strong> efficiendi. Atomorum explicari eu qui, est enim quaerendum te. Quo harum viris id. Per ne quando dolore evertitur, pro ad cibo commune.</p>-->
+                                <div class="row" id="description2">
+                                    <!--                                        <div class="col-lg-6">
+                                                                                <ul class="bullets">
+                                                                                    <li>Dolorem mediocritatem</li>
+                                                                                    <li>Mea appareat</li>
+                                                                                    <li>Prima causae</li>
+                                                                                    <li>Singulis indoctum</li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="col-lg-6">
+                                                                                <ul class="bullets">
+                                                                                    <li>Timeam inimicus</li>
+                                                                                    <li>Oportere democritum</li>
+                                                                                    <li>Cetero inermis</li>
+                                                                                    <li>Pertinacia eum</li>
+                                                                                </ul>
+                                                                            </div>-->
+                                </div>
+                                <!-- /row -->
+                                <hr>
+
+                                <h3>Pictures</h3>
+                                <div id="morephotos" >
+                                    
+                                </div>
+                                
+
+                                <hr>
+                                <h3>Location</h3>
+                                <h2 class="h2-title" id="gymname2">Find Us on Google Maps :</h2>
+
+
+
+                                <!--<div id="map" class="map map_single add_bottom_30"></div>-->
+                                <!-- End Map -->
+                            </section>
+
+
+                            <div class="main-contact-map-in">
+                                <div class="mapouter"><div class="gmap_canvas">
+                                        <iframe width="100%" height="500px" id="gmap_canvas" src="https://maps.google.com/maps?q=31.620845714165693,74.87710472375572&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://2yu.co"></a><br><style>.mapouter{
+                                                position:relative;
+                                                text-align:right;
+                                                height:100%;
+                                                width:100%;
+                                                }</style><a href="https://embedgooglemap.2yu.co/"></a><style>.gmap_canvas {
+                                                overflow:hidden;
+                                                background:none!important;
+                                                height:100%;
+                                                width:100%;
+                                                }</style></div></div>
+                            </div>
+                            
+                            
+                            
+                            
+
+                            <section id="reviews">
+                                
+                                <div class="col-sm-12" style="text-align: center">
+                                    <input type="button" class="btn btn-success" value="ADD REVIEW"
+                                           style="border-radius: 10px;text-shadow: 2px 2px 5px black;" onclick="review()" />
+
+                                </div>
+
+                                <div style="text-align: center; margin-top: 40px" >
+                                <h2>Average Rating</h2>
+                                <div id="averagerating" >
+
+                                </div>
+                                </div>
+                                
+                                <div style="text-align: center; margin-top: 40px" >
+                                <h2>All Ratings</h2>
+                                <div id="showratings" >
+
+                                </div>
+                                </div>
+
+                                <div class="modal" id="myModal1" >
+                                    <div class="modal-dialog">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header " style="background: yellowgreen;" >
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title" style="color: white;"> Add Review</h4>
+                                            </div>
+                                            <div class="modal-body " >
+                                                <div>
+
+
+
+                                                    <div id="all">
+
+                                                        <form action="" method="post" id="form1">
+                                                            <table>
+                                                                <tr> <label class="form-group"> Give Ratings..</label>
+                                                                <td>
+                                                                    <img id="rating_1" src="rating/empty_star.png" onmouseover="fill(this);" onmouseout="unfill(this);" onclick="selected(this);" width="50px;" height="50px;">
+                                                                </td>
+                                                                <td>
+                                                                    <img id="rating_2" src="rating/empty_star.png" onmouseover="fill(this)" onmouseout="unfill(this)" onclick="selected(this)" width="50px;" height="50px;">
+                                                                </td>
+                                                                <td>
+                                                                    <img id="rating_3" src="rating/empty_star.png" onmouseover="fill(this)" onmouseout="unfill(this)" onclick="selected(this)" width="50px;" height="50px;">
+                                                                </td>
+                                                                <td>
+                                                                    <img id="rating_4" src="rating/empty_star.png" onmouseover="fill(this)" onmouseout="unfill(this)" onclick="selected(this)" width="50px;" height="50px;">
+                                                                </td>
+                                                                <td>
+                                                                    <img  id="rating_5" src="rating/empty_star.png" onmouseover="fill(this)" onmouseout="unfill(this)" onclick="selected(this)" width="50px;" height="50px;">
+                                                                </td>
+                                                                </tr>
+                                                            </table>
+                                                            <br>
+                                                            <label> Write Comment : </label> <input style="border-radius: 20px;" type="text" id="comment"  class="form-group"/>
+                                                            <input type="button" value="Submit" class="btn btn-primary"
+                                                                   style="border-radius: 10px;text-shadow: 2px 2px 5px black" onclick="addreview()" />
+                                                            <label style="display: none;color: tomato;" id="label1">Please Select Any Rating</label>
+
+                                                        </form>
+                                                    </div>
+
+                                                </div>   
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer " style="background: yellowgreen;" >
+                                            <button type="button" class="btn btn-default" style="border-radius: 10px;" data-dismiss="modal"  >Close</button>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                <!-- /review-container -->
+                            </section>
+                            <!-- /section -->
+                            <hr>
+
+                        </div>
+                        <!-- /col -->
+
+                        <aside class="col-lg-4" id="sidebar">
+                            <div class="box_detail booking">
+                                <div class="price" >
+                                    <h3 style="display: inline" >Offer price: ₹</h3> <h3 style="display: inline" id="offerprice">45$<small>person</small></h3>
+                                    <h6 id="price1">45$<small>person</small></h6>
+
+                                    <div class="score"><span>Good<em>350 Reviews</em></span><strong>7.0</strong></div>
+                                </div>
+
+                                <form action="#">
+                                    <div class="form-group">
+                                        <input type="text" name="startdate" id="startdate" class="form-control" placeholder="Arrival Date">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="enddate" id="enddate" class="form-control" onchange="func()" placeholder="Departure Date">
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <h5 style="display: inline" ><label> Grand Total is Rs.</label></h5>
+                                        <h5 style="display: inline" ><label id="grand"></label></h5>
+                                    </div>
+                                    <input class="btn btn-primary-bg" value="Check Availability" type="button" onclick="check()">
+                                             </form>
+
+<!--                                <div class="form-group input-dates">
+                                    <input class="form-control" type="text" name="dates" placeholder="When..">
+                                    <i class="icon_calendar"></i>
+                                </div>-->
+
+<!--                                <div class="panel-dropdown">
+                                    <a href="#">Guests <span class="qtyTotal">1</span></a>
+                                    <div class="panel-dropdown-content right">
+                                        <div class="qtyButtons">
+                                            <label>Adults</label>
+                                            <input type="text" name="qtyInput" value="1">
+                                        </div>
+                                        <div class="qtyButtons">
+                                            <label>Childrens</label>
+                                            <input type="text" name="qtyInput" value="0">
+                                        </div>
+                                    </div>
+                                </div>-->
+
+<!--                                <div class="form-group clearfix">
+                                    <div class="custom-select-form">
+                                        <select class="wide">
+                                            <option>Room Type</option>	
+                                            <option>Single Room</option>
+                                            <option>Double Room</option>
+                                            <option>Suite Room</option>
+                                        </select>
+                                    </div>
+                                </div>-->
+<!--                                <a href="cart-1.html" class=" add_top_30 btn_1 full-width purchase">Purchase</a>
+                                <a href="wishlist.html" class="btn_1 full-width outline wishlist"><i class="icon_heart"></i> Add to wishlist</a>
+                                <div class="text-center"><small>No money charged in this step</small></div>-->
+                            </div>
+                            <ul class="share-buttons">
+                                <li><a class="fb-share" href="#0"><i class="social_facebook"></i> Share</a></li>
+                                <li><a class="twitter-share" href="#0"><i class="social_twitter"></i> Tweet</a></li>
+                                <li><a class="gplus-share" href="#0"><i class="social_googleplus"></i> Share</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <!-- /row -->
+                </div>
+                <!-- /container -->
+            </div>
+            <!-- /bg_color_1 -->
+        </main>
+        
+        
+        
+        
+        <footer>
+		<div class="container margin_60_35">
+			<div class="row">
+				<div class="col-lg-5 col-md-12 pe-5">
+					<p><img src="img/logo.svg" width="150" height="36" alt=""></p>
+					<p>Mea nibh meis philosophia eu. Duis legimus efficiantur ea sea. Id placerat tacimates definitionem sea, prima quidam vim no. Duo nobis persecuti cu. Nihil facilisi indoctum an vix, ut delectus expetendis vis.</p>
+					<div class="follow_us">
+						<ul>
+							<li>Follow us</li>
+							<li><a href="#0"><i class="ti-facebook"></i></a></li>
+							<li><a href="#0"><i class="ti-twitter-alt"></i></a></li>
+							<li><a href="#0"><i class="ti-google"></i></a></li>
+							<li><a href="#0"><i class="ti-pinterest"></i></a></li>
+							<li><a href="#0"><i class="ti-instagram"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 ms-lg-auto">
+					<h5>Useful links</h5>
+					<ul class="links">
+						<li><a href="about.html">About</a></li>
+						<li><a href="login.html">Login</a></li>
+						<li><a href="register.html">Register</a></li>
+						<li><a href="blog.html">News &amp; Events</a></li>
+						<li><a href="contacts.html">Contacts</a></li>
+					</ul>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h5>Contact with Us</h5>
+					<ul class="contacts">
+						<li><a href="tel://61280932400"><i class="ti-mobile"></i> + 61 23 8093 3400</a></li>
+						<li><a href="mailto:info@Panagea.com"><i class="ti-email"></i> info@Panagea.com</a></li>
+					</ul>
+					<div id="newsletter">
+					<h6>Newsletter</h6>
+					<div id="message-newsletter"></div>
+					<form method="post" action="http://www.ansonika.com/panagea/phpmailer/newsletter_template_email.php" name="newsletter_form" id="newsletter_form">
+						<div class="form-group">
+							<input type="email" name="email_newsletter" id="email_newsletter" class="form-control" placeholder="Your email">
+							<input type="submit" value="Submit" id="submit-newsletter">
+						</div>
+					</form>
+					</div>
+				</div>
+			</div>
+			<!--/row-->
+			<hr>
+			<div class="row">
+				<div class="col-lg-6">
+					<ul id="footer-selector">
+						<li>
+							<div class="styled-select" id="lang-selector">
+								<select>
+									<option value="English" selected>English</option>
+									<option value="French">French</option>
+									<option value="Spanish">Spanish</option>
+									<option value="Russian">Russian</option>
+								</select>
+							</div>
+						</li>
+						<li>
+							<div class="styled-select" id="currency-selector">
+								<select>
+									<option value="US Dollars" selected>US Dollars</option>
+									<option value="Euro">Euro</option>
+								</select>
+							</div>
+						</li>
+						<li><img src="img/cards_all.svg" alt=""></li>
+					</ul>
+				</div>
+				<div class="col-lg-6">
+					<ul id="additional_links">
+						<li><a href="#0">Terms and conditions</a></li>
+						<li><a href="#0">Privacy</a></li>
+						<li><span>© Panagea</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+ <script src="js/common_scripts.js"></script>
+    <script src="js/main.js"></script>
+	<script src="phpmailer/validate.js"></script>
+        
+        <!-- INPUT QUANTITY  -->
+	<script src="js/input_qty.js"></script>
+
+	<!-- COLOR SWITCHER  -->
+    <script src="js/switcher.js"></script>
+
+
+       
+        
+    </div>
+    <!-- page -->
+
+    <!-- Sign In Popup -->
+    <div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide">
+        <div class="small-dialog-header">
+            <h3>Sign In</h3>
+        </div>
+        <form>
+            <div class="sign-in-wrapper">
+                <a href="#0" class="social_bt facebook">Login with Facebook</a>
+                <a href="#0" class="social_bt google">Login with Google</a>
+                <div class="divider"><span>Or</span></div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" id="email">
+                    <i class="icon_mail_alt"></i>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" name="password" id="password" value="">
+                    <i class="icon_lock_alt"></i>
+                </div>
+                <div class="clearfix add_bottom_15">
+                    <div class="checkboxes float-start">
+                        <label class="container_check">Remember me
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                    <div class="float-end mt-1"><a id="forgot" href="javascript:void(0);">Forgot Password?</a></div>
+                </div>
+                <div class="text-center"><input type="submit" value="Log In" class="btn_1 full-width"></div>
+                <div class="text-center">
+                    Don’t have an account? <a href="register.html">Sign up</a>
+                </div>
+                <div id="forgot_pw">
+                    <div class="form-group">
+                        <label>Please confirm login email below</label>
+                        <input type="email" class="form-control" name="email_forgot" id="email_forgot">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <p>You will receive an email containing a link allowing you to reset your password to a new preferred one.</p>
+                    <div class="text-center"><input type="submit" value="Reset Password" class="btn_1"></div>
+                </div>
+            </div>
+        </form>
+        <!--form -->
+    </div>
+    <!-- /Sign In Popup -->
+
+    <div id="toTop"></div><!-- Back to top button -->
+
+    <!-- COMMON SCRIPTS -->
+    <script src="js/common_scripts.js"></script>
+    <script src="js/main.js"></script>
+    <script src="phpmailer/validate.js"></script>
+
+    <!-- Map -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6Vck_vRXDPR8ILH8ZLOeGSEz_n4YR0mU&amp;callback=Function.prototype"></script>
+    <script src="js/map_single_hotel.js"></script>
+    <script src="js/infobox.js"></script>
+
+    <!-- DATEPICKER  -->
+    <!--    <script>
+            $(function () {
+                $('input[name="dates"]').daterangepicker({
+                    autoUpdateInput: false,
+                    parentEl: '.scroll-fix',
+                    minDate: new Date(),
+                    opens: 'left',
+                    locale: {
+                        cancelLabel: 'Clear'
+                    }
+                });
+                $('input[name="dates"]').on('apply.daterangepicker', function (ev, picker) {
+                    $(this).val(picker.startDate.format('MM-DD-YY') + ' > ' + picker.endDate.format('MM-DD-YY'));
+                });
+                $('input[name="dates"]').on('cancel.daterangepicker', function (ev, picker) {
+                    $(this).val('');
+                });
+            });
+        </script>-->
+
+    <!-- INPUT QUANTITY  -->
+    <!--<script src="js/input_qty.js"></script>-->
+
+    <!-- COLOR SWITCHER  -->
+<!--    <script src="js/switcher.js"></script>
+    <div id="style-switcher">
+        <h6>Color Switcher <a href="#"><i class="ti-settings"></i></a></h6>
+        <div>
+            <ul class="colors" id="color1">
+                <li>
+                    <a href="#" class="default" title="Default"></a>
+                </li>
+                <li>
+                    <a href="#" class="aqua" title="Aqua"></a>
+                </li>
+                <li>
+                    <a href="#" class="green_switcher" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="orange" title="Orange"></a>
+                </li>
+                <li>
+                    <a href="#" class="blue" title="Blue"></a>
+                </li>
+                <li>
+                    <a href="#" class="beige" title="Beige"></a>
+                </li>
+                <li>
+                    <a href="#" class="gray" title="Gray"></a>
+                </li>
+                <li>
+                    <a href="#" class="green-2" title="Green"></a>
+                </li>
+                <li>
+                    <a href="#" class="navy" title="Navy"></a>
+                </li>
+                <li>
+                    <a href="#" class="peach" title="Peach"></a>
+                </li>
+                <li>
+                    <a href="#" class="purple" title="Purple"></a>
+                </li>
+                <li>
+                    <a href="#" class="red" title="Red"></a>
+                </li>
+                <li>
+                    <a href="#" class="violet" title="Violet"></a>
+                </li>
+            </ul>
+        </div>
+    </div>-->
+
+
+
+
+
+
+    <!-- Jquery links --> 
+    <script src="js/jquery.min.js"></script> 
+    <script src="js/greensock.js"></script> 
+    <script src="js/layerslider.transitions.js"></script> 
+    <script src="js/layerslider.kreaturamedia.jquery.js"></script> 
+    <script src="js/popper.min.js"></script> 
+    <script src="js/bootstrap.min.js"></script> 
+    <script src="js/common.js"></script>
+    <script src="js/jquery.countdown.js"></script>
+    <script src="js/jquery.cookie.js"></script> 
+    <script src="js/custom.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+
+                                var from = "";
+                                var grand = 0;
+                                var offer = 0;
+                                var to = "";
+
+                                $(function () {
+                                    $("#startdate").datepicker({
+                                        minDate: 0,
+
+                                    });
+                                    from = $("#startdate")
+                                });
+
+
+                                $(function () {
+                                    $("#enddate").datepicker({
+                                        minDate: 0
+                                    });
+                                    to = $("#enddate")
+                                });
+
+                                function func()
+                                {
+
+                                    offer = document.getElementById("offerprice").innerText;
+
+                                    from = new Date(startdate.value);
+
+                                    to = new Date(enddate.value);
+
+                                    var milli_secs = to.getTime() - from.getTime();
+
+
+                                    // Convert the milli seconds to Days 
+                                    var days = milli_secs / (1000 * 3600 * 24);
+
+                                    days = Math.round(Math.abs(days));
+
+                                    grand = days * offer;
+                                    
+                                    document.getElementById("grand").innerHTML = grand;
+
+                                }
+
+       </script>
+
+
+<script>
+function formatUS(date) {
+    let mm = String(date.getMonth() + 1).padStart(2, '0');
+    let dd = String(date.getDate()).padStart(2, '0');
+    let yyyy = date.getFullYear();
+    return mm + "/" + dd + "/" + yyyy;
+}
+
+window.onload = function () {
+
+    let today = new Date();
+    let tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    // Set default values in US format MM/DD/YYYY
+    document.getElementById("startdate").value = formatUS(today);
+    document.getElementById("enddate").value = formatUS(tomorrow);
+};
+
+function func() {
+    let start = document.getElementById("startdate").value;
+    let end = document.getElementById("enddate").value;
+
+    // Convert string to Date object
+    let s = new Date(start);
+    let e = new Date(end);
+
+    if (e <= s) {
+        alert("Checkout date must be AFTER Checkin date!");
+        document.getElementById("enddate").value = "";
+        document.getElementById("grand").innerHTML = "0";
+        return;
+    }
+
+    calculateTotal();
+}
+
+function calculateTotal() {
+
+    let start = new Date(document.getElementById("startdate").value);
+    let end = new Date(document.getElementById("enddate").value);
+
+    let diff = (end - start) / (1000 * 60 * 60 * 24); 
+
+    if (diff > 0) {
+        let price = parseInt(document.getElementById("offerprice").innerHTML);
+        document.getElementById("grand").innerHTML = diff * price;
+    }
+}
+</script>
+
+
+
+</body>
+
+
+</html>

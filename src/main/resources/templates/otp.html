@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/vendors.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      background:border-box;
+      padding: 2rem;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 600px; 
+      height: 400px; 
+      max-width: none;
+/*      width: 100%;
+      max-width: 400px;*/
+    }
+
+    h2 {
+      margin: 5 5 5 5rem;
+      color: #333;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    input[type="email"] {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="email"]:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  
+  <style>
+            #otpSection {
+                display: none; /* Initially hide the OTP field and button */
+            }
+        </style>
+        <script>
+            function sendOTP() {
+                var Email = document.getElementById("Email").value;
+                fetch("./sendOTP", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({Email}).toString()
+                })
+                        .then(response => response.text())
+                        .then(ans => {
+                            alert(ans);
+
+                            if (ans === "OTP sent successfully to: " + Email) {
+                                document.getElementById("otpSection").style.display = "block"; // Show OTP section
+                            } else {
+                                alert("Email not present");
+                            }
+                        })
+                        .catch(err => console.error("Error sending OTP:", err));
+            }
+
+            function verifyOTP() {
+                var Email = document.getElementById("Email").value;
+                var otp = document.getElementById("otp").value;
+
+                fetch("./verifyOTP", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({Email, otp}).toString()
+                })
+                        .then(response => response.text())
+                        .then(ans => {
+                            alert(ans);
+
+                            if (ans === "OTP verified successfully!") {
+                                document.getElementById("resetPasswordSection").style.display = "block"; // Show password reset section
+                            } else {
+                                alert("Invalid OTP");
+                            }
+                        })
+                        .catch(err => console.error("Error verifying OTP:", err));
+            }
+
+            function resetPassword() {
+                var Email = document.getElementById("Email").value;
+                var newPassword = document.getElementById("newPassword").value;
+
+                fetch("./resetPassword", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({Email, newPassword}).toString()
+                })
+                        .then(response => response.text())
+                        .then(ans => {
+                            alert(ans);
+
+                            if (ans === "Password changed successfully!") {
+                                window.location.href = "./userlogin"; // Redirect to login page after password reset
+                            }
+                        })
+                        .catch(err => console.error("Error resetting password:", err));
+            }
+        </script>
+  
+</head>
+<body>
+  <div class="container">
+    <h2>Forgot Password</h2>
+    <form>
+<input type="text"  id="Email" name="text" class="form-control pq-bg-white" placeholder="text" required>
+                                    <input type="button" class="pq-button form-btn" style="width: 100%; text-align: center;" value="Send OTP" onclick="sendOTP()" />
+                                    <div id="otpSection" >
+                                        <input type="text"  id="otp" name="text" class="form-control pq-bg-white" placeholder="text" required>
+                                        <button type="button" class="pq-button form-btn" onclick="verifyOTP()" style="width: 100%; text-align: center;">Confirm OTP </button>
+                                    </div>
+                                    <div id="resetPasswordSection" style="display: none;">
+                                        <label for="newPassword">Enter new password:</label>
+                                        <input type="password" class="form-control pq-bg-white" id="newPassword">
+                                        <button type="button" class="pq-button form-btn" style="width: 100%; text-align: center;" onclick="resetPassword()">Reset Password</button>
+                                    </div>
+    </form>
+  </div>
+</body>
+</html>

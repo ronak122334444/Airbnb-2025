@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Panagea - Premium site template for travel agencies, hotels and restaurant listing.">
+        <meta name="author" content="Ansonika">
+        <!--<title>Panagea | Premium site template for travel agencies, hotels and restaurant listing.</title>-->
+
+
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+        <!-- GOOGLE WEB FONT -->
+        <link rel="preconnect" href="https://fonts.gstatic.com/">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+        <!-- BASE CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/vendors.css" rel="stylesheet">
+
+        <!-- ALTERNATIVE COLORS CSS -->
+        <link href="#" id="colors" rel="stylesheet">
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function getoCities()
+            {
+                
+                var url = "/getownerCities";
+
+                fetch(url, {method: "Get"})
+                        .then(response => response.text())
+                        .then(ans => renderoCities(ans));
+            }
+            function renderoCities(ans)
+            {
+                var obj = JSON.parse(ans);
+                var arr = obj.ans;
+                console.log(arr)
+
+                var ren = "";
+
+                ren += "<label style=\"color: black\">Select City</label>";
+                ren += "<select id=\"cityname\" class=\"form-control\" style=\"width: 100%\" >";
+                ren += "<option>Select City</option>";
+                for (var i = 0; i < arr.length; i++)
+                {
+                    var st = arr[i];
+
+                    ren += "<option style=\"color: black\" value=\'" + st.city + "\' >" + st.city + "</option>";
+                }
+                ren += "</select>";
+//                ren += "</div>";
+
+
+                document.getElementById("city").innerHTML = ren;
+            }
+function getoProperties()
+            {
+
+                var url = "/getownerProperties";
+
+                fetch(url, {method: "Get"})
+                        .then(response => response.text())
+                        .then(ans => renderoProperties(ans));
+            }
+
+            function renderoProperties(ans)
+            {
+
+                var obj = JSON.parse(ans);
+                var arr = obj.ans;
+//                console.log(arr);
+                 console.log("Parsed properties array:", arr);
+
+                var ren = "";
+
+
+
+
+                ren += "<label style=\"color: black\">Select property type</label>";
+                ren += "<select id=\"property\" class=\"form-control\" style=\"width: 100%\" >";
+                ren += "<option>Select property type</option>";
+                for (var i = 0; i < arr.length; i++)
+                {
+                    var st = arr[i];
+
+
+                    ren += "<option style=\"color: black\" value=\'" + st.pname + "\' >" + st.pname + "</option>";
+                }
+                ren += "</select>";
+
+
+
+                document.getElementById("pname").innerHTML = ren;
+            }
+
+            function add() {
+                var propertyname = document.getElementById("propertyname").value;
+                var nm = document.getElementById("property").value;
+                alert(nm)
+                var price = document.getElementById("price").value;
+                var oprice = document.getElementById("oprice").value;
+                var city = document.getElementById("cityname").value;
+                var add = document.getElementById("address").value;
+                var des = document.getElementById("pdes").value;
+                var latitude= document.getElementById("latitude").value;
+                var longitude = document.getElementById("longitude").value;
+                var photo = document.getElementById("pphoto").files[0];
+                var url = "/ownerproperties";
+                var formdata = new FormData();
+                formdata.append("pname", nm);
+                formdata.append("price", price);
+                formdata.append("oprice", oprice);
+                formdata.append("city", city);
+                formdata.append("address", add);
+                formdata.append("pdes", des);
+                formdata.append("pphoto", photo);
+                formdata.append("pn", propertyname);
+                formdata.append("latitude", latitude);
+                formdata.append("longitude",longitude);
+                
+                
+                fetch(url, {method: "Post", body: formdata})
+                        .then(response => response.text())
+                        .then(ans => renderAsHtml(ans));
+            }
+
+
+
+            function renderAsHtml(ans)
+            {
+//                alert(ans)
+                if (ans === "success")
+                {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Property Added Successful!',
+                        text: 'You have successfully logged in!',
+                        showConfirmButton: true,
+                        confirmButtonColor: '#3085d6', // Custom button color
+                        background: '#f4f6f9' // Light background for aesthetics
+                    }).then((result) => {
+                        // Check if the confirm button was clicked
+                        if (result.isConfirmed) {
+                            window.location.href = "/ownerhome";
+                        }
+                    });
+
+                } else
+                {
+                    alert("Failed")
+                    Swal.fire({
+                        icon: "error",
+                        title: "Property Added Failed!!! Enter Valid Email/Password",
+                        showConfirmButton: false,
+                        timer: 3000
+                    });
+                    setTimeout(3000);
+                     }
+                    }
+
+        </script>
+
+
+    </head>
+
+    <body id="register_bg" onload="getoCities();getoProperties()">
+        <!--
+
+
+        <nav id="menu" class="fake_menu"></nav>
+
+        <div id="preloader">
+            <div data-loader="circle-side"></div>
+        </div>
+        <!-- End Preload -->
+
+        <div id="login">
+            <aside>
+<!--                <figure>
+                    <a href="index-2.html"><img src="img/logo_sticky.svg" width="155" height="36" alt="" ></a>
+                </figure>-->
+                <form>
+                    
+                    <div class="form-group">
+                        <label>Enter Hotel/Villa Name</label>
+                        <input class="form-control" type="text" id="propertyname">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    
+                    <div class="form-group" id="pname" >
+
+                    </div>
+
+                    <div class="form-group">
+                        <label>enter price(per day)</label>
+                        <input class="form-control" type="text" id="price">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter offer price(per day)</label>
+                        <input class="form-control" type="text" id="oprice">
+                        <i class="icon_mail_alt"></i>
+                    </div>
+
+                    <div class="form-group" id="city">
+                        <!--                                <label>Enter City</label>
+                                                                <input class="form-control" type="text" id="city">
+                                                                <i class="icon_mail_alt"></i>-->
+                    </div>
+                   
+                    <div class="form-group">
+                        <label>Enter Address</label>
+                        <input class="form-control" type="text" id="address">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter description</label>
+                        <input class="form-control" type="text" id="pdes">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Enter latitude</label>
+                        <input class="form-control" type="text" id="latitude">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Enter longitude</label>
+                        <input class="form-control" type="text" id="longitude">
+                        <i class="icon_lock_alt"></i>
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <label> Property photo</label>
+                        <input class="form-control" type="file" accept="image/*"  placeholder="photo" id="pphoto">
+
+
+                        <i class="icon_mail_alt"></i>
+                    </div>
+                    <div id="pass-info" class="clearfix"></div>
+                    <input type="button" class="btn_add" value="add" onclick="add()">
+
+
+                    </aside>
+            
+            		
+        
+        
+        
+        
+
+                    <script src="js/common_scripts.js"></script>
+                    <script src="js/main.js"></script>
+                    <script src="phpmailer/validate.js"></script>
+
+                    
+                    <script src="js/pw_strenght.js"></script>
+
+<!--                     COLOR SWITCHER  
+                    <script src="js/switcher.js"></script>
+                    <div id="style-switcher">
+                        <h6>Color Switcher <a href="#"><i class="ti-settings"></i></a></h6>
+                        <div>
+                            <ul class="colors" id="color1">
+                                <li>
+                                    <a href="#" class="default" title="Default"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="aqua" title="Aqua"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="green_switcher" title="Green"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="orange" title="Orange"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="blue" title="Blue"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="beige" title="Beige"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="gray" title="Gray"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="green-2" title="Green"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="navy" title="Navy"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="peach" title="Peach"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="purple" title="Purple"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="red" title="Red"></a>
+                                </li>
+                                <li>
+                                    <a href="#" class="violet" title="Violet"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                    -->
+
+
+                    </body>
+
+
+                    </html>

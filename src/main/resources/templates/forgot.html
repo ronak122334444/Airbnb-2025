@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Change Password</title>
+  <style>
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(120deg, #89f7fe, #66a6ff);
+       background-image: url('https://i.pinimg.com/736x/c6/4e/f6/c64ef6e8afea461b0485368a3b1b5e89.jpg');
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px 30px;
+      border-radius: 10px;
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+      animation: fadeInUp 1.2s ease-out;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      animation: fadeInUp 1.4s ease-out;
+    }
+
+    .form-group label {
+      display: block;
+      color: #555;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #66a6ff;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      color: #fff;
+      background: #66a6ff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      animation: fadeInUp 1.6s ease-out;
+    }
+
+    .btn:hover {
+      background: #4d8ef6;
+    }
+
+    .msg {
+      text-align: center;
+      color: #888;
+      font-size: 13px;
+      margin-top: 15px;
+      animation: fadeInUp 1.8s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="fadeInUp">Change Password</h2>
+    <form>
+      <div class="form-group">
+        <label for="old-password">Old Password</label>
+        <input type="password" id="old-password" name="old-password" placeholder="Enter old password" required>
+      </div>
+      <div class="form-group">
+        <label for="new-password">New Password</label>
+        <input type="password" id="new-password" name="new-password" placeholder="Enter new password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password" required>
+      </div>
+      <button type="submit" class="btn">Change Password</button>
+    </form>
+    <p class="msg">Make sure your new password is strong!</p>
+  </div>
+</body>
+</html>

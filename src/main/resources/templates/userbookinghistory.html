@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Bon Voyage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+        <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+        <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+        <!-- GOOGLE WEB FONT -->
+        <link rel="preconnect" href="https://fonts.gstatic.com/">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+
+        <!-- BASE CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/vendors.css" rel="stylesheet">
+
+        <!-- ALTERNATIVE COLORS CSS -->
+        <link href="#" id="colors" rel="stylesheet">
+    </head>
+    <script>
+            function userbookingshistory() {
+                var url = "/userbooking";
+
+                fetch(url, {method: "Get"})
+                        .then(response => response.text())
+                        .then(ans => alreadyuserbookingshistory(ans));
+            }
+
+            function alreadyuserbookingshistory(ans) {
+                alert(ans)
+                var obj = JSON.parse(ans);
+                var arr = obj.ans;
+                var s = "";
+                s = s + "<div class='container'>";
+                s = s + "<h1 class='text-primary pb-3' style='text-align:center;font-size:30px;margin-top:20px;margin-bottom:30px;'>User View Booking</h1>";
+                s = s + "<table class='table table-primary table-bordered table-hover table-primary text-primary mb-3'>";
+                s = s + "<tr>";
+                s = s + "<th style='text-align:center; color: white;' class='text-primary'>Booking Id</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Owner Email</th>";
+                 s = s + "<th style='text-align:center;' class='text-primary'>Payment Type</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Total Price</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Address</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>Start Date</th>";
+                s = s + "<th style='text-align:center;' class='text-primary'>End Date</th>";
+
+                s = s + "</tr>";
+
+                for (var i = 0; i < arr.length; i++) {
+                    s = s + "<tr>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].detail_id + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].owner_email + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].payment_type + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].total_price + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].address + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].start_date + "</td>";
+                    s = s + "<td style='text-align:center;' class='py-3'>" + arr[i].end_date + "</td>";
+                    s = s + "</tr>";
+                }
+
+                s = s + "</table>";
+//                s = s + "<h1 class='text-primary pb-3' style='text-align:center;font-size:30px;margin-top:50px;'>Next Banner</h1>";
+                s = s + "</div>";  // Closing the container
+
+                document.getElementById("t1").innerHTML = s;
+            }
+        </script>
+    <body onload="userbookingshistory()">
+<!--        <div th:insert="usernavbar"></div>-->
+       <main>                
+                <div id="t1" >
+                    
+                </div>
+       </main>
+       <div th:insert="footer" >
+            </div>
+
+    </body>
+</html>
